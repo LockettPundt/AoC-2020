@@ -323,8 +323,21 @@ const input = `
 #.###.#..#.....##..##....#...#.
 .#...#.#####....##..........##.
 `
-
+const testInput = `
+..##.......
+#...#...#..
+.#....#..#.
+..#.#...#.#
+.#...##..#.
+..#.##.....
+.#.#.#....#
+.#........#
+#.##...#...
+#...##....#
+.#..#...#.#
+`
 const inputArray = input.split('\n').filter(x => !!x)
+const testArray = testInput.split('\n').filter(x => !!x)
 
 // part one...
 const skiSlope = (arr) => {
@@ -341,4 +354,39 @@ const skiSlope = (arr) => {
   }, 0)
 }
 
-console.log(skiSlope(inputArray))
+// part two...
+
+const slopes = [
+  [1, 1],
+  [3, 1],
+  [5, 1],
+  [7, 1],
+  [1, 2],
+]
+
+const skiSlopeTwo = (arr, directions) => {
+  const results = directions.map((x) => {
+    let slopePosition = 0
+    const [skip, rowSkip] = x
+    return [...arr]
+      .filter((_, i) => i % rowSkip === 0)
+      .reduce((sum, row) => {
+        if (slopePosition >= row.length) {
+          slopePosition = slopePosition - row.length
+        }
+        if (row[slopePosition] === '#') {
+          sum += 1
+        }
+        slopePosition += skip
+        return sum
+      }, 0)
+    })
+  return results.reduce((total, y) => total * y, 1) 
+}
+
+// console.log(skiSlope(inputArray)) // 230
+// console.log(skiSlopeTwo(testArray, slopes)) 
+console.log(skiSlopeTwo(inputArray, slopes))
+
+
+
