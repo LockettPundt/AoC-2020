@@ -3,7 +3,7 @@ const testData = require('fs').readFileSync('testInput.txt', 'utf-8').split('\n'
 
 const binaryBoarding = (passes) => {
   return Math.max(...passes.map(x => {
-    const range = x.split('').reduce((obj, letter) => {
+    const { row, column } = x.split('').reduce((obj, letter) => {
       switch (letter) {
         case 'F':
           obj.row.upper = Math.floor((obj.row.upper + obj.row.lower) / 2)
@@ -29,7 +29,7 @@ const binaryBoarding = (passes) => {
         upper: 7,
       }
     })
-    return range.row.upper * 8 + range.column.upper
+    return row.upper * 8 + column.upper
   })
   )
 }
