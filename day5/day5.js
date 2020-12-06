@@ -33,7 +33,7 @@ const binaryBoardingTwo = (passes) => {
   })
   const [ mySeat ] = seatIds.sort((a, b) => a - b)
     .filter((x, i, arr) => +arr[i + 1] && +arr[i + 1] !== +x + 1)
-  return `The highest seat Id is ${seatIds[seatIds.length - 1]} and your seat Id is ${mySeat + 1}.}`
+  return `The highest seat Id is ${Math.max(...seatIds)} and your seat Id is ${mySeat + 1}.`
 }
 
 console.log(binaryBoardingTwo(data))
