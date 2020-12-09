@@ -3,14 +3,23 @@ const testData = require('fs').readFileSync('testInput.txt', 'utf-8').split('\n'
 
 const preambleLength = 25
 
-// console.log(testData)
-
 const encodingError = (data) => {
+  let weakness
   for (let i = preambleLength; i < data.length; i++) {
     const num = data.slice(i)[0]
-    const result = data.slice(i - preambleLength, i).map((x, i, arr) => arr.includes(num - x))
-    if(result.every(x => !x)) {
-      return `Here is the answer ${data.slice(i)[0]}`
+    const results = data.slice(i - preambleLength, i).map((x, i, arr) => arr.includes(num - x))
+    if(!results.includes(true)) {
+      weakness = data.slice(i)[0]
+    }
+  }
+  for (let i = 0; i < data.length; i++) {
+    const range = data.slice(i)
+    for(let j = range.length - 1; j >= 0; j--) {
+      const current = range.slice(0, j)
+      const sum = current.reduce((sum, x) => sum += x, 0)
+      if (sum === weakness) {
+        return Math.min(...current) + Math.max(...current)
+      }
     }
   }
 }
